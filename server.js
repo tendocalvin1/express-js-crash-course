@@ -29,7 +29,14 @@ app.get('/api/posts', (req, res)=>{
 // Getting a single post
 app.get('/api/posts/:id', (req, res)=>{
    const id = parseInt(req.params.id);
-   res.status(200).json(posts.filter((post)=> post.id === id))
+   // res.status(200).json(posts.filter((post)=> post.id === id))
+   const post = posts.find((post) => post.id === id)
+
+   if(!post){
+    res.status(404).json({message: `A post with the id of ${id} was not found`})
+   }else{
+    res.status(200).json(post)
+   }
 })
 
 
