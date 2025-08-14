@@ -1,43 +1,20 @@
 
-const express = require('express')
-const path = require('path')
+import express from 'express'
+import path from 'path'
+import http from 'http'
+import posts from './routes/posts.js'
+
 const PORT = process.env.PORT  || 8000
 
 
 const app = express();
 
+// Routes
+app.use('/api/posts', posts)
+
 // setting up static folder that is the public folder
 // app.use(express.static(path.join(__dirname, 'public')))
 
-let posts = [
-    {id : 1, title : 'post one'},
-    {id : 2, title : 'post two'},
-    {id : 3, title : 'post three'},
-
-]
-// Getting all posts
-app.get('/api/posts', (req, res)=>{
-    const limit = parseInt(req.query.limit);
-
-    if(!isNaN(limit)  && limit > 0){
-        res.status(200).json(posts.slice(0, limit))
-    }else{
-    res.status(200).json(posts)
-    }
-})
-
-// Getting a single post
-app.get('/api/posts/:id', (req, res)=>{
-   const id = parseInt(req.params.id);
-   // res.status(200).json(posts.filter((post)=> post.id === id))
-   const post = posts.find((post) => post.id === id)
-
-   if(!post){
-    res.status(404).json({message: `A post with the id of ${id} was not found`})
-   }else{
-    res.status(200).json(post)
-   }
-})
 
 
 // app.get('/', (req, res)=>{
