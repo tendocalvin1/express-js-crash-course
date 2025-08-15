@@ -13,24 +13,55 @@ router.get('/', (req, res)=>{
     const limit = parseInt(req.query.limit);
 
     if(!isNaN(limit)  && limit > 0){
-        res.status(200).json(posts.slice(0, limit))
-    }else{
-    res.status(200).json(posts)
+    return res.status(200).json(posts.slice(0, limit))
     }
+    
+    res.status(200).json(posts)
+    
 })
 
-// Getting a single post
+// Getting a single post GET request
+// get method for acquiring the exact item that one wants
 router.get('/:id', (req, res)=>{
-   const id = parseInt(req.params.id);
-   // res.status(200).json(posts.filter((post)=> post.id === id))
+   const id = parseInt(req.params.id); 
    const post = posts.find((post) => post.id === id)
 
    if(!post){
-    res.status(404).json({message: `A post with the id of ${id} was not found`})
-   }else{
-    res.status(200).json(post)
+    return res.status(404).json({message: `A post with the id of ${id} was not found`})
    }
+
+    res.status(200).json(post)
+   
 })
 
+// creating a new post
+// post method for creating something new POST request
+router.post('/', (req, res) =>{
+    console.log(req.body)
+    const newPost = {
+        id: posts.length + 1,
+        title: req.body.title
+    }; 
+
+    if(!newPost.title){
+        return res.status(400).json({message: "Please include a title"})
+    }
+
+    posts.push(newPost);
+    res.status(201).json(posts)
+})
+
+// updating posts PUT request
+// [ We normally use the put method]
+router.put('/:id', (req, res) =>{
+    const id = parseInt(req.params.id)
+    const posts = posts.find((post) =>{
+        post.id === id
+
+    if(!post){
+        return res.status(404).json({message: `A post with the id of ${id} was not found`})
+        }
+    })
+})
 
 export default router
