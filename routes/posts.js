@@ -12,7 +12,7 @@ let posts = [
 
 
 // Getting all posts
-router.get('/',(req, res)=>{
+router.get('/',(req, res, next)=>{
     const limit = parseInt(req.query.limit);
 
     if(!isNaN(limit)  && limit > 0){
@@ -25,12 +25,14 @@ router.get('/',(req, res)=>{
 
 // Getting a single post GET request
 // get method for acquiring the exact item that one wants
-router.get('/:id', (req, res)=>{
+router.get('/:id', (req, res, next)=>{
    const id = parseInt(req.params.id); 
    const post = posts.find((post) => post.id === id)
 
    if(!post){
-    return res.status(404).json({message: `A post with the id of ${id} was not found`})
+    const error = new Error(`A post with the id of ${id} was not found`)
+    error.status = 404
+    return next(error)
    }
 
     res.status(200).json(post)
@@ -39,7 +41,7 @@ router.get('/:id', (req, res)=>{
 
 // creating a new post
 // post method for creating something new POST request
-router.post('/', (req, res) =>{
+router.post('/', (req, res, next) =>{
     console.log(req.body)
     const newPost = {
         id: posts.length + 1,
@@ -47,7 +49,9 @@ router.post('/', (req, res) =>{
     }; 
 
     if(!newPost.title){
-        return res.status(400).json({message: "Please include a title"})
+       const error = new Error({message: "Please include a title"})
+       error.status = 400;
+       return next(error)
     }
 
     posts.push(newPost);
@@ -56,7 +60,7 @@ router.post('/', (req, res) =>{
 
 // updating posts PUT request
 // [ We normally use the put method]
-router.put('/:id', (req, res) =>{
+router.put('/:id', (req, res, next) =>{
     const id = parseInt(req.params.id)
     const post = posts.find((post) => post.id === id)
 
@@ -70,7 +74,7 @@ router.put('/:id', (req, res) =>{
 
 // Delete post
 // we use the delete request
-router.delete('/:id', (req, res) =>{
+router.delete('/:id', (req, res, next) =>{
     const id = parseInt(req.params.id)
     const post = posts.find((post) => post.id === id)
 
