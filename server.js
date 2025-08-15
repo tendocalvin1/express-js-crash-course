@@ -5,6 +5,7 @@ import http from 'http'
 import posts from './routes/posts.js'
 import logger from './middleware/logger.js'
 import errorHandler from './middleware/error.js'
+import NotFound from './middleware/NotFound.js'
 
 const PORT = process.env.PORT  || 8000
 
@@ -20,14 +21,13 @@ app.use(logger)
 
 // Routes
 app.use('/api/posts', posts)
-app.use((req, res, next) =>{
-    const error = new Error('Not found')
-    error.status = 404;
-    next(error)
-})
+
+
 
 // Error Handler
+app.use(NotFound)
 app.use(errorHandler)
+
 
 // setting up static folder that is the public folder
 // app.use(express.static(path.join(__dirname, 'public')))
