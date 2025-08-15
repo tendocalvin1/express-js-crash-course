@@ -55,13 +55,28 @@ router.post('/', (req, res) =>{
 // [ We normally use the put method]
 router.put('/:id', (req, res) =>{
     const id = parseInt(req.params.id)
-    const posts = posts.find((post) =>{
-        post.id === id
+    const post = posts.find((post) => post.id === id)
 
     if(!post){
         return res.status(404).json({message: `A post with the id of ${id} was not found`})
-        }
+       }
+       post.title = req.body.title
+        res.status(200).json(posts)
     })
-})
+
+
+// Delete post
+// we use the delete request
+router.delete('/:id', (req, res) =>{
+    const id = parseInt(req.params.id)
+    const post = posts.find((post) => post.id === id)
+
+    if(!post){
+        return res.status(404).json({message: `A post with the id of ${id} was not found`})
+       }
+       posts = posts.filter((post) =>(post.id !== id))
+        res.status(200).json(posts)
+    })
+
 
 export default router
