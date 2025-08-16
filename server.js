@@ -26,15 +26,8 @@ app.use(logger)
 // Routes
 app.use('/api/posts', posts)
 
-
-
-// Error Handler
-app.use(NotFound)
-app.use(errorHandler)
-
-
 // setting up static folder that is the public folder
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res)=>{
      res.sendFile(path.join(__dirname, 'public','index.html'));
@@ -43,6 +36,13 @@ app.get('/', (req, res)=>{
 app.get('/about', (req, res)=>{
     res.sendFile(path.join(__dirname, 'public','about.html'));
  });
+
+// Error Handler
+app.use(NotFound)
+app.use(errorHandler)
+
+
+
 
 
 app.listen(PORT, ()=> console.log(`Server is running on port ${PORT}`));
