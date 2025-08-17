@@ -1,4 +1,6 @@
-let notes = []
+let notes = [
+    {id:1, title:'I am doing my work right now'}
+]
 
 
 // @desc  get all notes

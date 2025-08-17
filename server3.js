@@ -2,7 +2,10 @@ import {fileURLToPath} from 'url'
 import express from 'express'
 import http from 'http'
 import path from 'path'
-import {} from './Controllers2/NotesControllers.js'
+import errorHandler1 from './Middleware1/error1.js';
+import logger1 from './Middleware1/logger1.js';
+import NotFound1 from './Middleware1/NotFound1.js'
+
 
 const PORT = process.env.PORT
 
@@ -27,5 +30,5 @@ app.use(express.static(path.join(__dirname, 'Public3')))
 
 
 // Error handling
-app.use(errorHandler)
+app.use(errorHandler1)
 app.use(NotFound1)
