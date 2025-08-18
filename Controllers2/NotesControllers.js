@@ -1,5 +1,7 @@
 let notes = [
-    {id:1, title:'I am doing my work right now'}
+   {id: 1, title: 'Note one'},
+   {id: 2, title: 'Note two'},
+   {id: 3, title: 'Note three'}
 ]
 
 
@@ -45,11 +47,11 @@ export const createNote = (req, res, next) =>{
     }
 
     if(!newNote.title){
-        const error = new Error("Please include a title for the note you're creating")
-        error.status(404)
+        const error = new Error({message: "Please include a title for the note you're creating"})
+        error.status = 400
         return next(error)
     }
-
+    notes.push(newNote);
     res.status(201).json(notes)
 }
 
@@ -72,7 +74,7 @@ export const updateNote = (req, res, next) =>{
   // @desc  Delete a note
 // @route   DELETE /api/note/:id
 
-const deleteNote = (req, res ,next) =>{
+export const deleteNote = (req, res ,next) =>{
     const id = parseInt(req.params.id)
     const note = notes.find((note)=> note.id === id)
 
@@ -83,3 +85,5 @@ const deleteNote = (req, res ,next) =>{
     notes = notes.filter((note) => note.id !== id)
     res.status(200).json(notes)
 }
+
+

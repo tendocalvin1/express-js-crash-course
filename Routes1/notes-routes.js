@@ -1,5 +1,5 @@
 import express from 'express'
-import {getNotes,getNote,createNote,updateNote,deleteNote} from './Controllers2/NotesControllers.js'
+import {getNotes,getNote,createNote,updateNote,deleteNote} from '../Controllers2/NotesControllers.js'
 
 const router = express.Router()
 
@@ -20,4 +20,6 @@ router.put('/', updateNote)
 
 // deleting notes DELETE request
 // [ We normally use the DELETE method]
-router.delete('/', deleteNote)
+router.delete('/:id', deleteNote)
+
+export default router

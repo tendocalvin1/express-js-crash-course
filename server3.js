@@ -5,6 +5,8 @@ import path from 'path'
 import errorHandler1 from './Middleware1/error1.js';
 import logger1 from './Middleware1/logger1.js';
 import NotFound1 from './Middleware1/NotFound1.js'
+import notes from './Routes1/notes-routes.js'
+
 
 
 const PORT = process.env.PORT
@@ -32,3 +34,8 @@ app.use(express.static(path.join(__dirname, 'Public3')))
 // Error handling
 app.use(errorHandler1)
 app.use(NotFound1)
+
+
+app.listen(PORT, ()=>{
+    console.log(`Server is running on port ${PORT}`)
+})
