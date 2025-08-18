@@ -52,6 +52,10 @@ export const createPost =  (req, res, next) =>{
        return next(error)
     }
 
+    /* `posts.push(newPost);` is adding a new post object to the `posts` array. It creates a new post
+    object with an `id` that is one greater than the last post in the array and a `title` that is
+    taken from the request body. This new post object is then added to the `posts` array using the
+    `push` method. */
     posts.push(newPost);
     res.status(201).json(posts)
 }

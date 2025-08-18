@@ -1,8 +1,8 @@
 
 
-const NotFound1 = (req, res, next) =>{
-    const error = new Error('Not Found')
-    error.status(404)
+const NotFound1 = (err, req, res, next) =>{
+    const error = new Error({message: 'Not Found'})
+    error.status = 404
     next(error)
 }
 
