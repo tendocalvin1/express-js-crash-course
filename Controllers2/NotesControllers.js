@@ -59,10 +59,11 @@ export const createNote = (req, res, next) =>{
 // @route   PUT /api/note/
 
 export const updateNote = (req, res, next) =>{
+    console.log(req.body);
     const id = parseInt(req.params.id)
     const note = notes.find((note) => note.id === id)
 
-    if(!post){
+    if(!note){
         return res.status(404).json({message : `A note with an id of ${id} was not found`})
     }
 
